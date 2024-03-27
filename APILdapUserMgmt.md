@@ -132,7 +132,7 @@ curl -k 'https://api.sys.tas01.tas-aws-lab.hyrulelab.com/v3/roles' \
 After this, the user is displayed in AppsManager with the guid for some time.
 - Confirmed this happens both when created from API calls or `cf create-user --origin ldap`
 
-Eventually, the CC DB gets the username from the UAA DB and displays that instead of the guid
+Eventually, it gets the username from the UAA DB and AppsManager displays that instead of the guid
 - When another role is added to a new user
 - Probably when the user logs in
 
