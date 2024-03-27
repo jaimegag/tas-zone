@@ -17,7 +17,7 @@ cf login (use a real admin user, not client)
 cf create-user john-ldap --origin ldap # needs no password                                                                           
 cf set-org-role john-ldap dev OrgAuditor
 ```
-Query UAA for user created via cf CLI
+Query UAA for user created via UAA CLI and API to confirm UAA DB fields - [/Users/[guid] GET](https://docs.cloudfoundry.org/api/uaa/version/77.3.0/index.html#get) 
 ```
 # Get UAA token with my new client via UAA CLI
 uaac token client get superclient -s 'Passsss!'
@@ -25,14 +25,17 @@ uaac token client get superclient -s 'Passsss!'
 uaac user get john-ldap
 # (the user guid is included in the response)
 
-# Get token via UAA API
+# Get token via UAA API 
 curl -k 'https://uaa.sys.tas01.tas-aws-lab.hyrulelab.com/oauth/token' -u 'superclient:Passsss!' -d grant_type=client_credentials
-# Get user via UAA API (using token) to confirm UAA DB fields
+# Get user via UAA API (using token) 
 curl -k 'https://uaa.sys.tas01.tas-aws-lab.hyrulelab.com/Users/508b7098-4395-4ca3-ac31-b5d761eed33c' -i -X GET \
     -H 'Authorization: Bearer aaa'
 ```
-Query CF API  for user created via cf CLI - [/v3/users/[guid] GET](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#get-a-user) to confirm CC DB fields
+Query CF API  for user created via cf CLI to confirm CC DB fields - [/v3/users/[guid] GET](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#get-a-user) 
 ```
+# Get token via UAA API 
+curl -k 'https://uaa.sys.tas01.tas-aws-lab.hyrulelab.com/oauth/token' -u 'superclient:Passsss!' -d grant_type=client_credentials
+# Get user via CF API (using token) 
 curl -k 'https://api.sys.tas01.tas-aws-lab.hyrulelab.com/v3/users/508b7098-4395-4ca3-ac31-b5d761eed33c' \
   -X GET \
   -H 'Authorization: Bearer aaa'
@@ -90,7 +93,7 @@ curl -k 'https://api.sys.tas01.tas-aws-lab.hyrulelab.com/v3/users' \
     "guid": "0528e9ef-ef58-4427-8da3-c9fd0191c867"
   }'
 ```
-List Organizations - [/v3/organizations GET](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#list-organizations)
+List Organizations via CF API - [/v3/organizations GET](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#list-organizations)
 ```
 # Get token via UAA API
 curl -k 'https://uaa.sys.tas01.tas-aws-lab.hyrulelab.com/oauth/token' -u 'superclient:Passsss!' -d grant_type=client_credentials
@@ -100,7 +103,7 @@ curl -k 'https://api.sys.tas01.tas-aws-lab.hyrulelab.com/v3/organizations' \
   -H 'Authorization: bearer aaa'
 # (the guid of all orgs is included in the response)
 ```
-Configure our LDAP user as `organization_manager` of `dev` org - [/v3/roles POST](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#create-a-role)
+Configure our LDAP user as `organization_manager` of `dev` org via CF API - [/v3/roles POST](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#create-a-role)
 ```
 # Get token via UAA API
 curl -k 'https://uaa.sys.tas01.tas-aws-lab.hyrulelab.com/oauth/token' -u 'superclient:Passsss!' -d grant_type=client_credentials
