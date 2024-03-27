@@ -13,7 +13,7 @@ Create LDAP user via cf CLI
 (to see how the cf CLI populates the DB(s) and to have a baseline to compate against)
 ```
 cf api https://api.sys.tas01.tas-aws-lab.hyrulelab.com --skip-ssl-validation
-cf login (use a real admin user, not client)
+cf login # use a real admin user, not client
 cf create-user john-ldap --origin ldap # needs no password                                                                           
 cf set-org-role john-ldap dev OrgAuditor
 ```
