@@ -100,7 +100,7 @@ curl -k 'https://api.sys.tas01.tas-aws-lab.hyrulelab.com/v3/organizations' \
   -H 'Authorization: bearer aaa'
 # (the guid of all orgs is included in the response)
 ```
-Configure our LDAP user as organization_manager of "dev" org - [/v3/roles POST](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#create-a-role)
+Configure our LDAP user as `organization_manager` of `dev` org - [/v3/roles POST](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#create-a-role)
 ```
 # Get token via UAA API
 curl -k 'https://uaa.sys.tas01.tas-aws-lab.hyrulelab.com/oauth/token' -u 'superclient:Passsss!' -d grant_type=client_credentials
@@ -127,7 +127,8 @@ curl -k 'https://api.sys.tas01.tas-aws-lab.hyrulelab.com/v3/roles' \
 
 ```
 After this, the user is displayed in AppsManager with the guid for some time.
-- Confirmed this happens both when created from API calls or cf create-user --origin ldap
+- Confirmed this happens both when created from API calls or `cf create-user --origin ldap`
+
 Eventually, the CC DB gets the username from the UAA DB and displays that instead of the guid
 - When another role is added to a new user
 - Probably when the user logs in
