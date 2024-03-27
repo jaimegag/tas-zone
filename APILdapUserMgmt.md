@@ -10,7 +10,7 @@ uaac token client get admin -s "uT6-ercAfivheelsc7I72tMlUNKfvT4t"
 uaac client add superclient -s "Passsss!"  --authorized_grant_types client_credentials --scope cloud_controller.admin,clients.read,password.write,clients.secret,clients.write,uaa.admin,scim.write,scim.read --authorities cloud_controller.admin,clients.read,password.write,clients.secret,clients.write,uaa.admin,scim.write,scim.read
 ```
 Create LDAP user via cf CLI
-(to illustrate how it's done from that end and to see results)
+(to see how the cf CLI populates the DB(s) and to have a baseline to compate against)
 ```
 cf api https://api.sys.tas01.tas-aws-lab.hyrulelab.com --skip-ssl-validation
 cf login (use a real admin user, not client)
@@ -27,11 +27,11 @@ uaac user get john-ldap
 
 # Get token via UAA API
 curl -k 'https://uaa.sys.tas01.tas-aws-lab.hyrulelab.com/oauth/token' -u 'superclient:Passsss!' -d grant_type=client_credentials
-# Get user via UAA API (using token)
+# Get user via UAA API (using token) to confirm UAA DB fields
 curl -k 'https://uaa.sys.tas01.tas-aws-lab.hyrulelab.com/Users/508b7098-4395-4ca3-ac31-b5d761eed33c' -i -X GET \
     -H 'Authorization: Bearer aaa'
 ```
-Query CF API  for user created via cf CLI - [/v3/users/[guid] GET](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#get-a-user)
+Query CF API  for user created via cf CLI - [/v3/users/[guid] GET](https://v3-apidocs.cloudfoundry.org/version/3.159.0/#get-a-user) to confirm CC DB fields
 ```
 curl -k 'https://api.sys.tas01.tas-aws-lab.hyrulelab.com/v3/users/508b7098-4395-4ca3-ac31-b5d761eed33c' \
   -X GET \
